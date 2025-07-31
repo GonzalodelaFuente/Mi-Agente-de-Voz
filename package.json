@@ -1,0 +1,27 @@
+{
+  "name": "oaiv-webrtc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "tsx server.ts",
+    "dev:server": "ts-node-dev --respawn --transpile-only server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@openai/agents": "^0.0.14",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "openai": "^5.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "ts-node-dev": "^2.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
