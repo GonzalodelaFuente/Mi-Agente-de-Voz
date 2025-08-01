@@ -36,28 +36,18 @@ async function start() {
    * 4  Create a RealtimeSession and connect with the token
    * ------------------------------------------------------- */
   const session = new RealtimeSession(agent, {
-  model: 'gpt-4o-realtime-preview-2025-06-03',
-  inputAudioTranscription: {
-      model: 'whisper-1'          // enables live Whisper STT
-      // language: 'en',           // optional – auto-detect if omitted
-      // prompt: 'medical terms…'  // optional bias prompt
-  }
+  model: 'gpt-4o-realtime-preview-2025-06-03'
   }
   ); // empty constructor
   
   // 4.1  print each transcription chunk as soon as it arrives
   session.on('history_updated', (history) => {
+  // prove the handler runs
+  console.log('📡 history update (#items =', history.length, ')');
+
+  // dump the newest element in a readable way
   const last = history.at(-1);
-  if (!last || last.type !== 'message') return;
-
-  console.log('🧩 block types:', last.content.map(b => b.type));   // ← new line
-
-  for (const block of last.content) {
-    if (block.type === 'text') {
-      const tag = block.is_final ? '✅ final' : '…';
-      console.log(`${tag} [${last.role}] ${block.text}`);
-    }
-  }
+  console.dir(last, { depth: null });
 });
 
 
@@ -76,4 +66,3 @@ async function start() {
 start().catch((err) => {
   console.error('Failed to start realtime session:', err);
 });
-
