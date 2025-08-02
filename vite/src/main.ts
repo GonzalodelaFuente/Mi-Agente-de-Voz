@@ -29,26 +29,48 @@ async function start() {
    * ------------------------------------------------------- */
   const agent = new RealtimeAgent({
   name: 'Assistant',
-  instructions: 'You are a helpful assistant.'
+  instructions: 'You are a helpful assistant. Talk in English.'
 });
 
   /* ---------------------------------------------------------
    * 4  Create a RealtimeSession and connect with the token
    * ------------------------------------------------------- */
   const session = new RealtimeSession(agent, {
-  model: 'gpt-4o-realtime-preview-2025-06-03'
-  }
-  ); // empty constructor
-  
-  // 4.1  print each transcription chunk as soon as it arrives
-  session.on('history_updated', (history) => {
-  // prove the handler runs
-  console.log('📡 history update (#items =', history.length, ')');
-
-  // dump the newest element in a readable way
-  const last = history.at(-1);
-  console.dir(last, { depth: null });
+    model: 'gpt-4o-realtime-preview-2025-06-03',
+    config: {
+        inputAudioTranscription: { model: 'gpt-4o-mini-transcribe' }
+    }
 });
+  
+
+let lastMessageId = null; // Track the last processed message ID to avoid duplication
+
+  // Add an event listener to react when the conversation history updates
+session.on('history_updated', (history) => {
+    // Get the most recent item from the history array using the last element method
+    const last = history.at(-1);
+    // Check if the last item exists and is of type 'message' to avoid errors
+    if (!last || last.type !== 'message') return; // Exit if conditions aren't met
+
+    // Get the HTML element where we will display the transcription
+    const display = document.getElementById('transcription-display');
+    // Only proceed if the display element is found in the HTML
+    if (display) {
+        // Loop through each content block in the last message
+        for (const block of last.content) {
+            // Check if the block contains audio input or output transcription data
+            // Only process if this is a new message
+        if (last.itemId !== lastMessageId) {
+            for (const block of last.content) {
+                if (block.type === 'input_audio' || block.type === 'audio') {
+                    // Add the message with a role prefix and newline
+                    display.textContent += `${last.role === 'user' ? 'You: ' : 'Assistant: '}${block.transcript}\n`;
+                }
+            }
+            lastMessageId = last.itemId; // Update the last processed ID
+        }
+    }
+}});
 
 
 
