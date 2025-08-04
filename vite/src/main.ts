@@ -43,34 +43,24 @@ async function start() {
 });
   
 
-let lastMessageId = null; // Track the last processed message ID to avoid duplication
+let lastMessageId = null;
 
-  // Add an event listener to react when the conversation history updates
 session.on('history_updated', (history) => {
-    // Get the most recent item from the history array using the last element method
-    const last = history.at(-1);
-    // Check if the last item exists and is of type 'message' to avoid errors
-    if (!last || last.type !== 'message') return; // Exit if conditions aren't met
+  const last = history.at(-1);
+  if (!last || last.type !== 'message') return;
 
-    // Get the HTML element where we will display the transcription
-    const display = document.getElementById('transcription-display');
-    // Only proceed if the display element is found in the HTML
-    if (display) {
-        // Loop through each content block in the last message
-        for (const block of last.content) {
-            // Check if the block contains audio input or output transcription data
-            // Only process if this is a new message
-        if (last.itemId !== lastMessageId) {
-            for (const block of last.content) {
-                if (block.type === 'input_audio' || block.type === 'audio') {
-                    // Add the message with a role prefix and newline
-                    display.textContent += `${last.role === 'user' ? 'You: ' : 'Assistant: '}${block.transcript}\n`;
-                }
-            }
-            lastMessageId = last.itemId; // Update the last processed ID
-        }
+  const display = document.getElementById('transcription-display');
+  if (display) {
+    for (const block of last.content) {
+      if (block.type === 'input_audio' || block.type === 'audio') {
+        const transcriptionText = block.transcript || 'Transcription failed';
+        const entry = document.createElement('div');
+        entry.textContent = `${last.role === 'user' ? 'You: ' : 'Assistant: '}${transcriptionText}`;
+        display.appendChild(entry);
+      }
     }
-}});
+  }
+});
 
 
 
@@ -78,9 +68,7 @@ session.on('history_updated', (history) => {
   await session.connect({ apiKey: token });
   console.log('✅ Realtime session connected → id =');
 
-  session.on('history_updated', (history) => {
-  // returns the full history of the session
-  console.log(history)})
+
 
 }
 

@@ -1,0 +1,5 @@
+You: I'm testing a separate conversation.
+You: I'm testing a separate conversation.
+Assistant: Got it! Feel free to test things out or ask anything you need. I'm here to help.
+You: So you don't remember anything about the previous conversation, right?
+Assistant: That’s correct! I treat each conversation as its own and don't remember anything from past interactions. So we start fresh each time!

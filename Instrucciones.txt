@@ -1,0 +1,22 @@
+- server.ts crea el servidor the fichas efímeras.
+- vite/src/maintest.ts toma dichas fichas de server.ts y establece la conversación vía API. Transcribe todo a la página del servidor web Vite en tiempo real.
+- convo-saver.js salva cada conversación a texto en una carpeta cronoetiquetada.
+
+------------------
+
+
+Lo siguiente sería:
+
+- Dar al bicho alguna herramienta para comprobar algo (API de TG o Google, p.ej)
+- Crear un servidor MCP para ello, no sé muy bien cómo. Mirarlo.
+- Conectarlo a twillio y ser capaz de:
+    + Que la llamada haga que arranquen los 3 servicios.
+    + Ser capaz de hablar y obtener respuestas que dependan del uso de herramientas.
+- Darle acceso a conversaciones anteriores mediante alguna herramienta.
+
+
+------------------
+
+Futuras mejoras:
+
+- Diseñar algún sistema que le permita recorrer mis conversaciones previas y ¨esforzarse en recordar¨.
