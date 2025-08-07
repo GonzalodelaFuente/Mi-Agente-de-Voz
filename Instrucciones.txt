@@ -1,6 +1,16 @@
 - server.ts crea el servidor the fichas efímeras.
+  C:\Users\User\VSCodeProjects\Mi-Agente-de-Voz> npm run dev
+
 - vite/src/maintest.ts toma dichas fichas de server.ts y establece la conversación vía API. Transcribe todo a la página del servidor web Vite en tiempo real.
+  PS C:\Users\User\VSCodeProjects\Mi-Agente-de-Voz> cd vite
+  PS C:\Users\User\VSCodeProjects\Mi-Agente-de-Voz\vite> npm run dev
+
 - convo-saver.js salva cada conversación a texto en una carpeta cronoetiquetada.
+  PS C:\Users\User\VSCodeProjects\Mi-Agente-de-Voz\vite> node convo-saver.js
+  
+
+
+
 
 ------------------
 
